@@ -1,0 +1,28 @@
+{
+    "questions": [
+        {
+            "type": "mc",
+            "question": "What state was the first FBLA chapter in?",
+            "choices": ["Iowa", "Washington", "Florida", "Vermont"],
+            "answer": "Iowa" 
+        },
+        {
+            "type": "mc",
+            "question": "What are the official colors of FBLA?",
+            "choices": ["Blue and gold", "Red and gold", "Blue and red", "White and gold"],
+            "answer": "Blue and gold"
+        },
+        {
+            "type": "mc",
+            "question": "During what month is FBLA-PBL Week held?",
+            "choices": ["February", "March", "October", "December"],
+            "answer": "February"
+        },
+        {
+            "type": "mc",
+            "question": "During what month is FBLA-PBL Week held?",
+            "choices": ["February", "March", "October", "December"],
+            "answer": "February"
+        }
+    ]
+}
