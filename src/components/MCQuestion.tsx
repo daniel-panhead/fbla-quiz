@@ -1,5 +1,4 @@
 import React from 'react'
-import Radio from './Radio'
 
 interface Props {
   question: {
@@ -8,18 +7,24 @@ interface Props {
     question: string;
     type: string
   };
-  number: number
+  number: number;
+  selected: {
+    [key: string]: string;
+  };
+  setSelection: ({}) => void;
 }
 
-const MCQuestion: React.FC<Props> = (({question, number}) => {
+const MCQuestion: React.FC<Props> = (({question, number, selected, setSelection}) => {
   return (
     <div>
       <div className="box" style={{backgroundColor: number%2==0 ? "azure" : "white"}}>
         <p id="text">{number}. {question.question}</p>
         {question.choices.map((choice) => {
+          console.log(number)
           return(
             <label className="radio">
-              <input type="radio" value={choice} name={"question"+number} /> {choice}
+              <input type="radio" value={choice} name={"question"+number} checked={selected[`question${number}`]===choice} 
+                onChange={e => setSelection({...selected, [`question${number}`]: e.target.value})} /> {choice}
             </label>
           )})}
       </div>
