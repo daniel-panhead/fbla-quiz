@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React, { FormEvent, useState } from 'react';
 import MCQuestion from './MCQuestion';
 import Nav from './Nav';
 
@@ -15,8 +15,11 @@ const Quiz: React.FC<Props> = ({questions}) => {
 
   let counter = 0;
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
+  const [radio, setRadio] = useState("");
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(radio);
   }
 
   return (
@@ -37,6 +40,17 @@ const Quiz: React.FC<Props> = ({questions}) => {
                   </div>
                 )}
             })}
+            <li>
+              <div className="box" style={{backgroundColor: "white"}}>
+                <p id="text">5. Is this true or false?</p>
+                <label className="radio">
+                  <input type="radio" value="True" checked={radio === "True"} onChange={e => setRadio(e.target.value)} name="question5" /> True
+                </label>
+                <label className="radio">
+                  <input type="radio" value="False" checked={radio === "False"} onChange={e => setRadio(e.target.value)} name="question5" /> False
+                </label>
+              </div>
+            </li>
           </ol>
         </div>
         <input type="submit" className="button is-link" value="Submit" />

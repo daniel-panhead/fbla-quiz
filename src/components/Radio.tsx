@@ -8,7 +8,7 @@ interface Props {
 const Radio: React.FC<Props> = ({ choiceName, questionNumber }) => {
   return (
     <label className="radio">
-      <input type="radio" name={"question"+questionNumber} ref={}/> {choiceName}
+      <input type="radio" name={"question"+questionNumber} /> {choiceName}
     </label>
   )
 }

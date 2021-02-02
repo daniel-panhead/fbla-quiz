@@ -11,18 +11,20 @@ interface Props {
   number: number
 }
 
-const MCQuestion: React.FC<Props> = ({ question, number }) => {
-  console.log(question)
+const MCQuestion: React.FC<Props> = (({question, number}) => {
   return (
     <div>
       <div className="box" style={{backgroundColor: number%2==0 ? "azure" : "white"}}>
         <p id="text">{number}. {question.question}</p>
         {question.choices.map((choice) => {
-          return <Radio choiceName={choice} questionNumber={number} />
-        })}
+          return(
+            <label className="radio">
+              <input type="radio" value={choice} name={"question"+number} /> {choice}
+            </label>
+          )})}
       </div>
     </div>
   )
-}
+})
 
 export default MCQuestion
