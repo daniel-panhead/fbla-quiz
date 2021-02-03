@@ -3,6 +3,7 @@ import Question from './Question';
 import Nav from './Nav';
 import MC from './MC';
 import FTB from './FTB';
+import Dropdown from './Dropdown';
 
 interface Props {
   questions: {
@@ -33,11 +34,11 @@ const getQuestions = ({questions}: Props) => {
       let randIndex = getRand(0, questions.length);
 
       //only add element at randIndex IF:
-      //if questionArr does not contain randIndex
+      //if questionArr does not contain randIndex (question has not already been selected) and
       //if questionArr does not contain the question type at questionArr[randIndex]
-      // OR if at least 4 different types have already been reached
-      if(uniqTypes >= 4 || !questionArr.some((question) => randIndex == question.index) &&
-      !questionArr.some((q) => questions[randIndex].type == q.type)) {
+      //or if at least 4 different types have already been reached
+      if(!questionArr.some((question) => randIndex == question.index) && 
+      (uniqTypes >= 4 || !questionArr.some((q) => questions[randIndex].type == q.type))) {
         questionArr.push({
         type: questions[randIndex].type,
         index: randIndex
@@ -47,16 +48,18 @@ const getQuestions = ({questions}: Props) => {
       }
     }
   }
-  //console.log(questionArr)
+  return(questionArr)
 }
 
 const Quiz: React.FC<Props> = ({questions}) => {
-  getQuestions({questions});
 
-  let counter = 0;
+  //grab random question indexes then grab corresponding
+  const randQuestionsIndex = getQuestions({questions});
+  const randQuestions = randQuestionsIndex.map((question) => questions[question.index]);
 
+
+  //initialize array for submitted questions
   const initialValues: {[key: string]: string} = {};
-
   for(let i = 1; i <= questions.length; i++) {
     initialValues[`question${i}` as any] = ""
   }
@@ -67,7 +70,8 @@ const Quiz: React.FC<Props> = ({questions}) => {
     e.preventDefault();
     console.log(selection);
   }
-  
+
+  let counter = 0;
   return (
     <>
       <Nav />
@@ -75,7 +79,7 @@ const Quiz: React.FC<Props> = ({questions}) => {
       <form onSubmit={handleSubmit} style={{padding: 10}}>
         <div className="block">
           <ol>
-            {questions.map((question) => {
+            {randQuestions.map((question) => {
               counter++;
 
               //MCQ and TF questions have same structure
@@ -89,6 +93,13 @@ const Quiz: React.FC<Props> = ({questions}) => {
                 return (
                   <Question key={counter} number={counter}>
                     <FTB question={question} number={counter} selected={selection} setSelection={setSelection} />
+                  </Question>
+                )
+              }
+              if(question.type == "dropdown") {
+                return (
+                  <Question key={counter} number={counter}>
+                    <Dropdown question={question} number={counter} selected={selection} setSelection={setSelection} />
                   </Question>
                 )
               }
