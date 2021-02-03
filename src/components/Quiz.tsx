@@ -1,6 +1,8 @@
 import React, { FormEvent, useState } from 'react';
-import MCQuestion from './MCQuestion';
+import Question from './Question';
 import Nav from './Nav';
+import MC from './MC';
+import FTB from './FTB';
 
 interface Props {
   questions: {
@@ -11,7 +13,45 @@ interface Props {
   }[]
 }
 
+const getRand = (min: number, max: number) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max-min) + min);
+}
+
+const getQuestions = ({questions}: Props) => {
+  let questionArr: {
+    type: string;
+    index: number
+  }[] = []
+
+  //let types = ["mc", "tf", "ftb", "dropdown"];
+  let uniqTypes = 0;
+
+  for(let i = 0; i < 5; i++) {
+    while(true) {
+      let randIndex = getRand(0, questions.length);
+
+      //only add element at randIndex IF:
+      //if questionArr does not contain randIndex
+      //if questionArr does not contain the question type at questionArr[randIndex]
+      // OR if at least 4 different types have already been reached
+      if(uniqTypes >= 4 || !questionArr.some((question) => randIndex == question.index) &&
+      !questionArr.some((q) => questions[randIndex].type == q.type)) {
+        questionArr.push({
+        type: questions[randIndex].type,
+        index: randIndex
+        });
+        uniqTypes++;
+        break;
+      }
+    }
+  }
+  //console.log(questionArr)
+}
+
 const Quiz: React.FC<Props> = ({questions}) => {
+  getQuestions({questions});
 
   let counter = 0;
 
@@ -20,10 +60,8 @@ const Quiz: React.FC<Props> = ({questions}) => {
   for(let i = 1; i <= questions.length; i++) {
     initialValues[`question${i}` as any] = ""
   }
-  initialValues[`question5`] = ""
 
-  const [selection, setSelection] = useState(initialValues);
-  
+  const [selection, setSelection] = useState(initialValues);  
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,35 +72,27 @@ const Quiz: React.FC<Props> = ({questions}) => {
     <>
       <Nav />
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{padding: 10}}>
         <div className="block">
           <ol>
             {questions.map((question) => {
               counter++;
 
-              if(question.type == "mc") {
+              //MCQ and TF questions have same structure
+              if(question.type == "mc" || question.type == "tf") {
                 return (
-                  <div className="block">
-                    <li>
-                      <MCQuestion question={question} number={counter} selected={selection} 
-                        setSelection={setSelection}/>
-                    </li>
-                  </div>
+                  <Question key={counter} number={counter}>
+                    <MC question={question} number={counter} selected={selection} setSelection={setSelection} />
+                  </Question>
                 )}
+              if(question.type == "ftb") {
+                return (
+                  <Question key={counter} number={counter}>
+                    <FTB question={question} number={counter} selected={selection} setSelection={setSelection} />
+                  </Question>
+                )
+              }
             })}
-            <li>
-              <div className="box" style={{backgroundColor: "white"}}>
-                <p id="text">5. Is this true or false?</p>
-                <label className="radio">
-                  <input type="radio" value="True" checked={selection.question5 === "True"} 
-                    onChange={e => setSelection({...selection, [`question5`]: e.target.value})} name="question5" /> True
-                </label>
-                <label className="radio">
-                  <input type="radio" value="False" checked={selection.question5 === "False"} 
-                    onChange={e => setSelection({...selection, [`question5`]: e.target.value})} name="question5" /> False
-                </label>
-              </div>
-            </li>
           </ol>
         </div>
         <input type="submit" className="button is-link" value="Submit" />

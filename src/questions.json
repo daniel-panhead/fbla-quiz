@@ -2,7 +2,7 @@
     "questions": [
         {
             "type": "mc",
-            "question": "What state was the first FBLA chapter in?",
+            "question": "What state was the first FBLA State chapter in?",
             "choices": ["Iowa", "Washington", "Florida", "Vermont"],
             "answer": "Iowa" 
         },
@@ -20,9 +20,34 @@
         },
         {
             "type": "mc",
-            "question": "During what month is FBLA-PBL Week held?",
-            "choices": ["February", "March", "October", "December"],
+            "question": "How many administrative regions is FBLA-PBL divided into?",
+            "choices": ["One", "Twelve", "Three", "Five"],
+            "answer": "Five"
+        },
+        {
+            "type": "tf",
+            "question": "True or False: American Enterprise Day is on November 15th.",
+            "choices": ["True", "False"],
+            "answer": "True"
+        },
+        {
+            "type": "ftb",
+            "question": "FBLA-PBL Week is held in _.",
+            "choices": [],
             "answer": "February"
+        },
+        {
+            "type": "ftb",
+            "question": "In a debate, each member can speak _ times in a motion. (ex. three)",
+            "choices": [],
+            "answer": "two"
+        },
+        {
+            "type": "dropdown",
+            "question": "The FBLA-PBL center is located at _.",
+            "choices": ["Cincinnati, OH", "Lexington, KY", "Atlanta, GA", "Reston, VA"],
+            "answer": "Reston, VA"
         }
+
     ]
 }

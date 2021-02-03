@@ -24,7 +24,8 @@ const Title: React.FC = () => {
           <div className="level">
             <div className="level-item">
               <Link to="/quiz">
-                <button id="startBtn" className="button is-link">Start the quiz</button></Link>
+                <button id="startBtn" className="button is-link">Start the quiz</button>
+              </Link>
             </div>
           </div>
         </div>
