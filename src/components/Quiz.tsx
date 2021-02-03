@@ -1,6 +1,7 @@
-import React, { FormEvent, useState } from 'react';
-import Question from './Question';
+import React, { FormEvent, useState, useEffect } from 'react';
 import Nav from './Nav';
+
+import Question from './Question';
 import MC from './MC';
 import FTB from './FTB';
 import Dropdown from './Dropdown';
@@ -11,7 +12,7 @@ interface Props {
     question: string;
     choices: string[];
     answer: string;
-  }[]
+  }[];
 }
 
 const getRand = (min: number, max: number) => {
@@ -20,7 +21,7 @@ const getRand = (min: number, max: number) => {
   return Math.floor(Math.random() * (max-min) + min);
 }
 
-const getQuestions = ({questions}: Props) => {
+const getQuestions = (questions: Props["questions"]) => {
   let questionArr: {
     type: string;
     index: number
@@ -40,32 +41,40 @@ const getQuestions = ({questions}: Props) => {
       if(!questionArr.some((question) => randIndex == question.index) && 
       (uniqTypes >= 4 || !questionArr.some((q) => questions[randIndex].type == q.type))) {
         questionArr.push({
-        type: questions[randIndex].type,
-        index: randIndex
+          type: questions[randIndex].type,
+          index: randIndex
         });
         uniqTypes++;
         break;
       }
     }
   }
-  return(questionArr)
+  const randQuestions = questionArr.map((question) => questions[question.index]);
+  return(randQuestions)
 }
+
+const getInitialVals = ((questions: object[]) => {
+  //generate initial array containing question props
+  let initialValues: {[key: string]: string} = {};
+  for(let i = 1; i <= questions.length; i++) {
+    initialValues[`question${i}`] = ""
+  }
+  return initialValues
+})
 
 const Quiz: React.FC<Props> = ({questions}) => {
 
-  //grab random question indexes then grab corresponding
-  const randQuestionsIndex = getQuestions({questions});
-  const randQuestions = randQuestionsIndex.map((question) => questions[question.index]);
+  //initialize random questions
+  const [randQuestions, setRandQuestions] = useState<Props["questions"]>(getQuestions(questions));
 
+  //only runs on page load; generates new questions each time
+  useEffect(() => {
+    setRandQuestions(getQuestions(questions))
+  }, []);
 
-  //initialize array for submitted questions
-  const initialValues: {[key: string]: string} = {};
-  for(let i = 1; i <= questions.length; i++) {
-    initialValues[`question${i}` as any] = ""
-  }
-
-  const [selection, setSelection] = useState(initialValues);  
-
+  //create state that holds values of selected questions
+  const [selection, setSelection] = useState(getInitialVals(randQuestions));  
+  
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(selection);
@@ -88,7 +97,8 @@ const Quiz: React.FC<Props> = ({questions}) => {
                   <Question key={counter} number={counter}>
                     <MC question={question} number={counter} selected={selection} setSelection={setSelection} />
                   </Question>
-                )}
+                )
+              }
               if(question.type == "ftb") {
                 return (
                   <Question key={counter} number={counter}>

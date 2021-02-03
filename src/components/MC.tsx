@@ -26,7 +26,7 @@ const MC: React.FC<Props> = ({question, number, selected, setSelection}) => {
             <input type="radio" value={choice} name={"question"+number} checked={selected[`question${number}`]===choice} 
               onChange={e => setSelection({...selected, [`question${number}`]: e.target.value})} 
             />
-            {choice}
+            &nbsp;{choice}
           </label>
         )
       })}

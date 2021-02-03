@@ -6,8 +6,8 @@ import Quiz from './components/Quiz';
 
 import {questions} from './questions.json';
 
-
 function render() {
+  //grab random question indexes then grab corresponding
   ReactDOM.render(
     <Router>
       <Switch>
