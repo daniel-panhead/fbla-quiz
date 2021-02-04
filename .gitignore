@@ -87,3 +87,6 @@ typings/
 
 # Electron-Forge
 out/
+
+# Saved test pdf
+result.pdf
