@@ -1,24 +1,16 @@
-import * as React from 'react';
+import React from 'react';
 import * as ReactDOM from 'react-dom';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import Title from './components/Title';
-import Quiz from './components/Quiz';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faTimesCircle, faCheck, faFilePdf } from '@fortawesome/free-solid-svg-icons'
 
-import {questions} from './questions.json';
+import Main from './components/Main';
+
+library.add(faTimesCircle, faCheck, faFilePdf);
 
 function render() {
-  //grab random question indexes then grab corresponding
+
   ReactDOM.render(
-    <Router>
-      <Switch>
-        <Route path="/" exact>
-          <Title />
-        </Route>
-        <Route path="/quiz">
-          <Quiz questions={questions} />
-        </Route>
-      </Switch>
-    </Router>
+    <Main />
     ,document.getElementById('root'));
 }
 

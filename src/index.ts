@@ -11,8 +11,11 @@ const createWindow = (): void => {
   const mainWindow = new BrowserWindow({
     height: 600,
     width: 800,
+    webPreferences: {
+      enableRemoteModule: true,
+      nodeIntegration: true
+    }
   });
-
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 

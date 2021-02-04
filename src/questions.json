@@ -14,9 +14,9 @@
         },
         {
             "type": "mc",
-            "question": "During what month is FBLA-PBL Week held?",
-            "choices": ["February", "March", "October", "December"],
-            "answer": "February"
+            "question": "In order to qualify for participation in FBLA competitive events, dues must be received by which date?",
+            "choices": ["February 28th", "March 1st", "October 30th", "January 15th"],
+            "answer": "March 1st"
         },
         {
             "type": "mc",
@@ -32,7 +32,7 @@
         },
         {
             "type": "ftb",
-            "question": "FBLA-PBL Week is held in _.",
+            "question": "FBLA-PBL Week is held in the month of _. (ex. January)",
             "choices": [],
             "answer": "February"
         },

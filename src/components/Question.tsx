@@ -1,12 +1,6 @@
 import React from 'react'
 
 interface Props {
-  // question: {
-  //   answer: string;
-  //   choices: string[];
-  //   question: string;
-  //   type: string
-  // };
   number: number;
 }
 

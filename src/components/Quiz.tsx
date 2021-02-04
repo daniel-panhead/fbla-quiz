@@ -1,10 +1,9 @@
-import React, { FormEvent, useState, useEffect } from 'react';
+import React, { FormEvent, useEffect } from 'react';
+import {useHistory} from 'react-router-dom';
 import Nav from './Nav';
 
-import Question from './Question';
-import MC from './MC';
-import FTB from './FTB';
-import Dropdown from './Dropdown';
+import QuestionWrapper from './QuestionWrapper';
+import {getQuestions, getInitialVals} from './GetQuestions';
 
 interface Props {
   questions: {
@@ -13,108 +12,37 @@ interface Props {
     choices: string[];
     answer: string;
   }[];
+  selection: {[key: string]: string};
+  setRandQuestions: ({}) => void;
+  setSelection: ({}) => void;
 }
 
-const getRand = (min: number, max: number) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max-min) + min);
-}
+const Quiz: React.FC<Props> = ({questions, selection, setRandQuestions, setSelection}) => {
 
-const getQuestions = (questions: Props["questions"]) => {
-  let questionArr: {
-    type: string;
-    index: number
-  }[] = []
-
-  //let types = ["mc", "tf", "ftb", "dropdown"];
-  let uniqTypes = 0;
-
-  for(let i = 0; i < 5; i++) {
-    while(true) {
-      let randIndex = getRand(0, questions.length);
-
-      //only add element at randIndex IF:
-      //if questionArr does not contain randIndex (question has not already been selected) and
-      //if questionArr does not contain the question type at questionArr[randIndex]
-      //or if at least 4 different types have already been reached
-      if(!questionArr.some((question) => randIndex == question.index) && 
-      (uniqTypes >= 4 || !questionArr.some((q) => questions[randIndex].type == q.type))) {
-        questionArr.push({
-          type: questions[randIndex].type,
-          index: randIndex
-        });
-        uniqTypes++;
-        break;
-      }
-    }
-  }
-  const randQuestions = questionArr.map((question) => questions[question.index]);
-  return(randQuestions)
-}
-
-const getInitialVals = ((questions: object[]) => {
-  //generate initial array containing question props
-  let initialValues: {[key: string]: string} = {};
-  for(let i = 1; i <= questions.length; i++) {
-    initialValues[`question${i}`] = ""
-  }
-  return initialValues
-})
-
-const Quiz: React.FC<Props> = ({questions}) => {
-
-  //initialize random questions
-  const [randQuestions, setRandQuestions] = useState<Props["questions"]>(getQuestions(questions));
-
-  //only runs on page load; generates new questions each time
+  //only runs on page load; generates new questions and clear selections each time
   useEffect(() => {
-    setRandQuestions(getQuestions(questions))
-  }, []);
-
-  //create state that holds values of selected questions
-  const [selection, setSelection] = useState(getInitialVals(randQuestions));  
+    setRandQuestions(getQuestions(questions));
+    setSelection(getInitialVals(questions));
+  }, []); 
   
+  //navigate to link on submit
+  const history = useHistory();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    for(let i = 1; i <= Object.keys(selection).length; i++) {
+      selection[`question${i}`] = selection[`question${i}`].trim();
+    }
     console.log(selection);
+    history.push('/result');
   }
 
-  let counter = 0;
   return (
     <>
       <Nav />
 
       <form onSubmit={handleSubmit} style={{padding: 10}}>
-        <div className="block">
-          <ol>
-            {randQuestions.map((question) => {
-              counter++;
-
-              //MCQ and TF questions have same structure
-              if(question.type == "mc" || question.type == "tf") {
-                return (
-                  <Question key={counter} number={counter}>
-                    <MC question={question} number={counter} selected={selection} setSelection={setSelection} />
-                  </Question>
-                )
-              }
-              if(question.type == "ftb") {
-                return (
-                  <Question key={counter} number={counter}>
-                    <FTB question={question} number={counter} selected={selection} setSelection={setSelection} />
-                  </Question>
-                )
-              }
-              if(question.type == "dropdown") {
-                return (
-                  <Question key={counter} number={counter}>
-                    <Dropdown question={question} number={counter} selected={selection} setSelection={setSelection} />
-                  </Question>
-                )
-              }
-            })}
-          </ol>
+        <div className="block" style={{margin: "1em 1em"}}>
+          <QuestionWrapper questions={questions} selection={selection} setSelection={setSelection} />
         </div>
         <input type="submit" className="button is-link" value="Submit" />
       </form>

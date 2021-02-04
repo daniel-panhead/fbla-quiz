@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+const image =  require('../images/fbla-logo.png');
 
 const Title: React.FC = () => {
   return (
@@ -8,7 +9,7 @@ const Title: React.FC = () => {
         <div className="block">
           <div className="level">
             <div className="level-item">
-            <img src={require('../images/fbla-logo.png')} alt="FBLA logo" width="256" height="256" />
+            <img src={image} alt="FBLA logo" width="256" height="256" />
             </div>
           </div>
         </div>
