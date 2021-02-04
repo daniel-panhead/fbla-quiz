@@ -35,7 +35,7 @@ const calculateScore = (questions: Props['questions'], selection: Props['selecti
 const Score: React.FC<{questions: Props["questions"], selection: Props["selection"]}> = (({questions, selection}) => {
   let score = calculateScore(questions, selection);
   let total = Object.keys(selection).length
-  let percent = (score/total)*100
+  let percent = ((score/total)*100).toFixed(2);
   return (
     <>
       <h1 className="title">Score: {percent}% ({score}/{total})</h1>

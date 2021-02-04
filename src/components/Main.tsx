@@ -5,14 +5,14 @@ import Title from './Title';
 import Quiz from './Quiz';
 import Result from './Result';
 
-import {questions} from '../questions.json';
+
 import {getQuestions, getInitialVals, Props} from './GetQuestions';
 
 
 const Main = () => {
 
   //initialize random questions state
-  const [randQuestions, setRandQuestions] = useState<Props["questions"]>(getQuestions(questions));
+  const [randQuestions, setRandQuestions] = useState<Props["questions"]>(getQuestions());
   //create state that holds values of selected questions
   const [selection, setSelection] = useState(getInitialVals(randQuestions));
 

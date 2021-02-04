@@ -21,7 +21,7 @@ const Quiz: React.FC<Props> = ({questions, selection, setRandQuestions, setSelec
 
   //only runs on page load; generates new questions and clear selections each time
   useEffect(() => {
-    setRandQuestions(getQuestions(questions));
+    setRandQuestions(getQuestions());
     setSelection(getInitialVals(questions));
   }, []); 
   

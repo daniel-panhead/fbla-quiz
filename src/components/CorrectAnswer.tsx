@@ -20,7 +20,7 @@ const CorrectAnswer: React.FC<Props> = ({question, number, selected}) => {
   return (
     <div>
       <FontAwesomeIcon style={{color: correct ? "green" : "red"}} icon={correct ? "check" : "times-circle"} size="lg" />&nbsp;
-      <b>{correct ? "Correct!" : "Wrong! Correct answer: " + question.answer}</b>
+      <b>{correct ? "Correct! Answer: " + question.answer : "Wrong! Correct answer: " + question.answer}</b>
     </div>
   )
 }

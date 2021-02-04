@@ -1,5 +1,4 @@
-import React from 'react'
-
+import {questions} from '../questions.json';
 export interface Props {
   questions: {
     type: string;
@@ -15,7 +14,8 @@ const getRand = (min: number, max: number) => {
   return Math.floor(Math.random() * (max-min) + min);
 }
 
-export const getQuestions = (questions: Props["questions"]) => {
+export const getQuestions = () => {
+  console.log(`Length: ${questions.length}`);
   let questionArr: {
     type: string;
     index: number
@@ -24,7 +24,7 @@ export const getQuestions = (questions: Props["questions"]) => {
   //let types = ["mc", "tf", "ftb", "dropdown"];
   let uniqTypes = 0;
 
-  for(let i = 0; i < 5; i++) {
+  for(let i = 0; i < questions.length; i++) {
     while(true) {
       let randIndex = getRand(0, questions.length);
 

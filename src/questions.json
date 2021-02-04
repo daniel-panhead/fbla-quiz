@@ -8,6 +8,12 @@
         },
         {
             "type": "mc",
+            "question": "Where was the first FBLA chapter chartered?",
+            "choices": ["Iowa", "Tennessee", "Kansas", "Ohio"],
+            "answer": "Tennessee" 
+        },
+        {
+            "type": "mc",
             "question": "What are the official colors of FBLA?",
             "choices": ["Blue and gold", "Red and gold", "Blue and red", "White and gold"],
             "answer": "Blue and gold"
@@ -25,10 +31,142 @@
             "answer": "Five"
         },
         {
+            "type": "mc",
+            "question": "What are the three words in the FBLA emblem?",
+            "choices": ["Service, Education, and Progress", "Business, Education, and Progress", "Freedom, Unity, and Leadership", "Unity, Leadership, and Safety"],
+            "answer": "Service, Education, and Progress"
+        },
+        {
+            "type": "mc",
+            "question": "What are the three categories of FBLA events?",
+            "choices": ["Individual, Team, and State", "Individual, Chapter, and National", "Individual, Team, and Chapter", "Individual, Chapter, and State"],
+            "answer": "Individual, Team, and Chapter"
+        },
+        {
+            "type": "mc",
+            "question": "Which two officers must be present in order to conduct a meeting?",
+            "choices": ["President and Vice President", "Vice President and Secretary", "President and Reporter", "President and Secretary"],
+            "answer": "President and Secretary"
+        },
+        {
+            "type": "mc",
+            "question": "What is the term for ending a meeting?",
+            "choices": ["Adjourn", "End", "Convene", "Conclude"],
+            "answer": "Adjourn"
+        },
+        {
+            "type": "mc",
+            "question": "Where will the 2021 FBLA National Leadership Conference (NLC) be held?",
+            "choices": ["Atlanta, GA", "Chicago, IL", "San Antonio, TX", "Anaheim, CA"],
+            "answer": "Anaheim, CA"
+        },
+        {
+            "type": "mc",
+            "question": "Where should be FBLA patch be placed on official dress?",
+            "choices": ["Right chest pocket", "Left chest pocket", "Left collar", "Bottom right pocket"],
+            "answer": "Left chest pocket"
+        },
+        {
+            "type": "mc",
+            "question": "Which of these is valid FBLA dress?",
+            "choices": ["Dress shirt", "Navy blazer", "FBLA tie", "All of the above"],
+            "answer": "All of the above"
+        },
+        {
+            "type": "mc",
+            "question": "What are the names of the levels of BAAs that can be earned?",
+            "choices": ["One, Two, Three, and Four", "Bronze, Silver, and Gold", "Future, Business, Leader, and America"],
+            "answer": "Future, Business, Leader, and America"
+        },
+        {
+            "type": "mc",
+            "question": "What does it mean to have the floor?",
+            "choices": ["To have the right to speak", "To be expelled from the meeting", "To oppose the motion", "To concur with the motion"],
+            "answer": "To have the right to speak"
+        },
+        {
+            "type": "mc",
+            "question": "What are the pieces of paper used to vote called?",
+            "choices": ["Slips", "Ballots", "Votees", "Choice"],
+            "answer": "Ballots"
+        },
+        {
             "type": "tf",
             "question": "True or False: American Enterprise Day is on November 15th.",
             "choices": ["True", "False"],
             "answer": "True"
+        },
+        {
+            "type": "tf",
+            "question": "True or False: The Gold Seal Award of Merit is named after James and Irwin Guy.",
+            "choices": ["True", "False"],
+            "answer": "False"
+        },
+        {
+            "type": "tf",
+            "question": "True or False: The land for the FBLA-PBL National Center was purchased through a grant from the Conrad Hilton Foundation.",
+            "choices": ["True", "False"],
+            "answer": "True"
+        },
+        {
+            "type": "tf",
+            "question": "True or False: Local chapters are charters by the national association and operate under the supervision of a state chapter.",
+            "choices": ["True", "False"],
+            "answer": "True"
+        },
+        {
+            "type": "tf",
+            "question": "True or False: Judges in the performance events do not consider dress code in their evaluations.",
+            "choices": ["True", "False"],
+            "answer": "False"
+        },
+        {
+            "type": "tf",
+            "question": "True or False: The agenda is the order of business or program of a business meeting",
+            "choices": ["True", "False"],
+            "answer": "True"
+        },
+        {
+            "type": "tf",
+            "question": "True or False: One of the FBLA creeds is \"I believe empowerment is the right of every person.\"",
+            "choices": ["True", "False"],
+            "answer": "False"
+        },
+        {
+            "type": "tf",
+            "question": "True or False: One of the FBLA creeds is \"Every person has the right to earn a living at a useful occupation.\"",
+            "choices": ["True", "False"],
+            "answer": "True"
+        },
+        {
+            "type": "tf",
+            "question": "True or False: Jeans are acceptable official dress.",
+            "choices": ["True", "False"],
+            "answer": "False"
+        },
+        {
+            "type": "tf",
+            "question": "True or False: An FBLA tie or scarf is a required part of FBLA official dress.",
+            "choices": ["True", "False"],
+            "answer": "True"
+        },
+        {
+            "type": "tf",
+            "question": "True or False: Convene means to open a session.",
+            "choices": ["True", "False"],
+            "answer": "True"
+        },
+        {
+            "type": "tf",
+            "question": "True or False: A motion is a proposal by a member, in a meeting, that the assembly take a particular action.",
+            "choices": ["True", "False"],
+            "answer": "True"
+        },
+        {
+            "type": "tf",
+            "question": "Someone who is authorized to vote for someone else is an in absentia voter.",
+            "choices": ["True", "False"],
+            "answer": "False"
         },
         {
             "type": "ftb",
@@ -43,10 +181,130 @@
             "answer": "two"
         },
         {
+            "type": "ftb",
+            "question": "The _ conducts and presides over meetings. (ex. Secretary)",
+            "choices": [],
+            "answer": "President"
+        },
+        {
+            "type": "ftb",
+            "question": "The chapter officer that prepares and reads the minutes of meetings is typically the _. (ex. Member)",
+            "choices": [],
+            "answer": "Secretary"
+        },
+        {
+            "type": "ftb",
+            "question": "The Parliamentary Procedure Event is named after _. (ex. Ulysses S Grant)",
+            "choices": [],
+            "answer": "Dorothy L Travis"
+        },
+        {
+            "type": "ftb",
+            "question": "What does CTSO stand for? _ (ex. Center for Kids who Can't Read Good)",
+            "choices": [],
+            "answer": "Career Technical Student Organization"
+        },
+        {
+            "type": "ftb",
+            "question": "What does ACTE stand for? _ (ex. Youth Men's Christian Association)",
+            "choices": [],
+            "answer": "Association for Career and Technical Education"
+        },
+        {
+            "type": "ftb",
+            "question": "The Code of Ethics states \"I will willingly accept responsibility and _.\"",
+            "choices": [],
+            "answer": "duties"
+        },
+        {
+            "type": "ftb",
+            "question": "PBL stands for _.",
+            "choices": [],
+            "answer": "Phi Beta Lambda"
+        },
+        {
+            "type": "ftb",
+            "question": "One of the goals of FBLA is to _ the confidence of students in themselves and their work.",
+            "choices": [],
+            "answer": "strengthen"
+        },
+        {
+            "type": "ftb",
+            "question": "One of the goals of FBLA is to _ competent, aggressive business leadership.",
+            "choices": [],
+            "answer": "develop"
+        },
+        {
+            "type": "ftb",
+            "question": "One of the goals of FBLA is to _ and practice efficient money management.",
+            "choices": [],
+            "answer": "encourage"
+        },
+        {
+            "type": "ftb",
+            "question": "One of the FBLA creeds is \"I have the _ to work efficiently and to think clearly. I promise to use my abilities to make the world a better place for everyone.\"",
+            "choices": [],
+            "answer": "responsibility"
+        },
+        {
+            "type": "ftb",
+            "question": "What does FBLA stand for? _",
+            "choices": [],
+            "answer": "Future Business Leaders of America"
+        },
+        {
+            "type": "ftb",
+            "question": "One of the FBLA Codes of Ethics is \"_ and act in a manner that will bring respect to me and to my school.\"",
+            "choices": [],
+            "answer": "dress"
+        },
+        {
+            "type": "ftb",
+            "question": "Who is the founder of FBLA? (ex. John F Kennedy)",
+            "choices": [],
+            "answer": "Hamden L Forkner"
+        },
+        {
             "type": "dropdown",
             "question": "The FBLA-PBL center is located at _.",
             "choices": ["Cincinnati, OH", "Lexington, KY", "Atlanta, GA", "Reston, VA"],
             "answer": "Reston, VA"
+        },
+        {
+            "type": "dropdown",
+            "question": "The FBLA-PBL theme for 2020-2021 is _.",
+            "choices": ["A World of Opportunity", "Excellence in Action", "Create. Lead. Inspire.", "Aspire"],
+            "answer": "Aspire"
+        },
+        {
+            "type": "dropdown",
+            "question": "March of Dimes raises awareness for _.",
+            "choices": ["Infant deaths", "Poverty", "HIV", "Single parents"],
+            "answer": "Infant deaths"
+        },
+        {
+            "type": "dropdown",
+            "question": "Pending questions from the late meeting are called _.",
+            "choices": ["Rollover questions", "Pending questions", "Unfinished business", "Pending business"],
+            "answer": "Unfinished business"
+        },
+        {
+            "type": "dropdown",
+            "question": "One of the FBLA Codes of Ethics is to be _ and sincere.",
+            "choices": ["honest", "responsible", "fair", "thoughtful"],
+            "answer": "honest"
+        },
+        {
+            "type": "dropdown",
+            "question": "Who is the president/CEO of FBLA-PBL? _",
+            "choices": ["Kristen Di Stefano", "Eric Jones", "Elena Daly", "Alexander T. Graham"],
+            "answer": "Alexander T. Graham"
+        },
+        {
+            "type": "dropdown",
+            "question": "Who is the national president of FBLA? _",
+            "choices": ["Hana Le", "Drew Lojewski", "Andrew Fox", "Kianna Bolante"],
+            "answer": "Drew Lojewski"
         }
 
     ]
