@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import {useHistory} from 'react-router-dom';
 import Nav from './Nav';
 
@@ -19,10 +19,24 @@ interface Props {
 
 const Quiz: React.FC<Props> = ({questions, selection, setRandQuestions, setSelection}) => {
 
+  const [loading, setLoading] = useState(true);
   //only runs on page load; generates new questions and clear selections each time
   useEffect(() => {
-    setRandQuestions(getQuestions());
-    setSelection(getInitialVals(questions));
+    const fetchQuestions = (async () => {
+      try {
+        setLoading(true);
+        const questions = await getQuestions();
+        setRandQuestions(questions);
+        setSelection(getInitialVals(questions));
+        setLoading(false);
+        console.log("done")
+      } catch(err) {
+        setLoading(false);
+        console.error(err);
+      }
+    })
+
+    fetchQuestions();
   }, []); 
   
   //navigate to link on submit
@@ -36,6 +50,12 @@ const Quiz: React.FC<Props> = ({questions, selection, setRandQuestions, setSelec
     history.push('/result');
   }
 
+  if(loading) return (
+    <>
+      <Nav />
+      <h1 className="title">LOADING!!!</h1>
+    </>
+  )
   return (
     <>
       <Nav />
