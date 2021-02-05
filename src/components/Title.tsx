@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import {Link, useHistory} from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import bcrypt from 'bcryptjs';
 import {getUsers, addUser} from './DBData';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const image =  require('../images/fbla-logo.png');
 
 interface UserProps {
@@ -20,7 +21,7 @@ const UserForm: React.FC<UserProps> = ({username, setUsername, password, setPass
             <FontAwesomeIcon icon="user" />
           </span>
           <input className="input" type="text" name="username" placeholder="Username" 
-          value={username} onChange={(e) => setUsername(e.target.value)}/>
+          value={username} onChange={(e) => setUsername(e.target.value)} autoFocus />
         </div>
       </div>
       <div className="field">
@@ -36,36 +37,68 @@ const UserForm: React.FC<UserProps> = ({username, setUsername, password, setPass
   )
 }
 
-const Title: React.FC = () => {
+const Title: React.FC<{username: string; setUsername: (arg0: string) => void}> = ({username, setUsername}) => {
 
   const [mode, setMode] = useState("hidden");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [invalidLogin, setInvalidLogin] = useState(false);
+  const [error, setError] = useState(false);
+  const [authSuccess, setAuthSuccess] = useState(false);
 
   const history = useHistory();
   const handleLogin = (() => {
+    setInvalidLogin(false);
+    setAuthSuccess(false);
     setUsername("")
     setPassword("");
     setMode((mode=="login") ? "hidden" : "login")
-    //history.push('/quiz');
   })
   const handleSignup = (() => {
+    setInvalidLogin(false);
+    setAuthSuccess(false);
     setUsername("")
     setPassword("");
     setMode((mode=="signup") ? "hidden" : "signup")
   })
 
   const onLogin = ((e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Login")
-    console.log(username)
-    console.log(password)
+    const getData = (async () => {
+      e.preventDefault();
+      console.log("Login")
+      const {users} = await getUsers();
+      const dbUser = users.find((user) => user.user == username)
+      //user exists and correct password hash
+      if(dbUser && await bcrypt.compare(password, dbUser.password)) {
+          setInvalidLogin(false);
+          setAuthSuccess(true);
+          history.push('/dashboard');
+      } else {
+        setInvalidLogin(true);
+      }
+    })
+    getData();
   })
   const onSignup = ((e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Password")
-    console.log(username)
-    console.log(password)
+    const getData = (async () => {
+      e.preventDefault();
+      const {users} = await getUsers();
+      //if user exists already
+      if(users.some((user) => user.user == username)) setInvalidLogin(true);
+      //user doesn't exist
+      else {
+        try {
+          const hashedPass = await bcrypt.hash(password, 10);
+          await addUser(username, hashedPass);
+          setInvalidLogin(false);
+          setAuthSuccess(true);
+        } catch(err) {
+          console.error(err)
+          return;
+        }
+      }
+    })
+
+    getData();
   })
 
   return (
@@ -101,8 +134,16 @@ const Title: React.FC = () => {
                   <UserForm username={username} setUsername={setUsername} password={password} setPassword={setPassword}/>
                   <div className="field">
                     <div className="control">
-                      <p className="help is-danger">Invalid username or password</p>
-                      <input type="submit" className="button is-link" value="Log in" />
+                      {(invalidLogin || error) &&
+                        <p className="help is-danger">
+                          {invalidLogin ? "Invalid username or password"
+                          : error ? "Something went wrong. Please try again": "Something went wrong. Please try again"}
+                        </p>
+                      }
+                      {authSuccess &&
+                        <p className="help is-success">Login successful</p>
+                      }
+                      <input type="submit" className="button is-info" value="Log in" />
                     </div>
                   </div>
                 </form>
@@ -116,7 +157,17 @@ const Title: React.FC = () => {
                   <UserForm username={username} setUsername={setUsername} password={password} setPassword={setPassword}/>
                   <div className="field">
                     <div className="control">
-                      <input type="submit" className="button is-link" value="Sign up" />
+                    {(invalidLogin || error) &&
+                      <p className="help is-danger">
+                        {invalidLogin ? "Username already exists"
+                        : error ? "Something went wrong. Please try again": "Something went wrong. Please try again"}
+                      </p>
+                    }
+                    {authSuccess &&
+                      <p className="help is-success">Username successfully added. Please login</p>
+                    }
+                    
+                    <input type="submit" className="button is-info" value="Sign up" />
                     </div>
                   </div>
                 </form>

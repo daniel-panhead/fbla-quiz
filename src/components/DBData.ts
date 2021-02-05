@@ -61,8 +61,14 @@ export const getInitialVals = ((questions: {}[]) => {
 
 export const getUsers = async () => {
   try {
-    const {users} = (await ipcRenderer.invoke('get-users')).users;
-    console.log(users);
+    
+    const users: {
+      users: [{
+        user: string,
+        password: string
+      }]
+    } = (await ipcRenderer.invoke('get-users')).users;
+    return users;
   } catch (err) {
     throw err;
   }
