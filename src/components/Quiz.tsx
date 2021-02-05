@@ -3,7 +3,8 @@ import {useHistory} from 'react-router-dom';
 import Nav from './Nav';
 
 import QuestionWrapper from './QuestionWrapper';
-import {getQuestions, getInitialVals} from './GetQuestions';
+import {getQuestions, getInitialVals} from './DBData';
+import Loading from './Loading';
 
 interface Props {
   questions: {
@@ -53,7 +54,7 @@ const Quiz: React.FC<Props> = ({questions, selection, setRandQuestions, setSelec
   if(loading) return (
     <>
       <Nav />
-      <h1 className="title">LOADING!!!</h1>
+      <Loading />
     </>
   )
   return (

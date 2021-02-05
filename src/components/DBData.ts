@@ -18,8 +18,7 @@ const getRand = (min: number, max: number) => {
 
 export const getQuestions = async () => {
   const {questions} = (await ipcRenderer.invoke('get-questions')).questions;
-  console.log(questions);
-  
+
   let questionArr: {
     type: string;
     index: number
@@ -59,3 +58,20 @@ export const getInitialVals = ((questions: {}[]) => {
   }
   return initialValues
 })
+
+export const getUsers = async () => {
+  try {
+    const {users} = (await ipcRenderer.invoke('get-users')).users;
+    console.log(users);
+  } catch (err) {
+    throw err;
+  }
+}
+
+export const addUser = async (user: string, password: string) => {
+  try {
+    await ipcRenderer.invoke('add-user', user, password);
+  } catch(err) {
+    throw err;
+  }
+}

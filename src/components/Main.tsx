@@ -5,12 +5,16 @@ import {ipcRenderer} from 'electron';
 import Title from './Title';
 import Quiz from './Quiz';
 import Result from './Result';
+import Loading from './Loading'
 
 
-import {getQuestions, getInitialVals, Props} from './GetQuestions';
+import {getQuestions, getInitialVals, getUsers, Props} from './DBData';
+
 
 
 const Main = () => {
+
+  const [login, setLogin] = useState();
 
   //initialize random questions state
   const [randQuestions, setRandQuestions] = useState<Props["questions"]>();
@@ -23,11 +27,12 @@ const Main = () => {
       try {
         setLoading(true);
         await ipcRenderer.invoke('get-db');
+        getUsers()
         const questions = await getQuestions();
         setRandQuestions(questions);
         setSelection(getInitialVals(questions));
         setLoading(false);
-        console.log("done")
+        console.log("questions fetched")
       } catch(err) {
         setLoading(false);
         console.error(err);
@@ -39,7 +44,7 @@ const Main = () => {
 
 
   if(loading) return (
-    <h1 className="title">LOADING!!!</h1>
+    <Loading />
   )
   return (
     <Router>

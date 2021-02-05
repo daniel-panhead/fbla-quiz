@@ -4,11 +4,7 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 const uri = "mongodb+srv://userAdmin:***REMOVED***@cluster0.ojeo0.mongodb.net/<dbname>?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
-let data: {
-  questions: {}[]
-  users: {}
-};
-
+const connection = client.connect();
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -47,16 +43,45 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 let questions: {}[];
+let users: {}
 ipcMain.handle('get-db', async (event) => {
   try {
-  await client.connect();
-  const questionsColllection = client.db("fbla-quiz").collection("questions");
-  questions = await questionsColllection.findOne({});
+  await connection;
+  //only need to fetch questions once since they don't change
+  const questionsCollection = client.db("fbla-quiz").collection("questions");
+  questions = await questionsCollection.findOne({});
   } catch(e) {
     throw e;
   }
 })
 
-ipcMain.handle('get-questions', () => {
+ipcMain.handle('get-questions', async () => {
   return {questions: questions};
+})
+
+ipcMain.handle('get-users', async () => {
+  const usersCollection = client.db("fbla-quiz").collection("users");
+  users = await usersCollection.findOne({});
+  return {users: users};
+})
+
+ipcMain.handle('add-user', async (event, user: string, password: string) => {
+  try {
+    const usersCollection = client.db("fbla-quiz").collection("users");
+    const query = {_id: "601d89cb83c4ea82117fbea6"} //users database
+    const updateDocument = {
+      $push: {
+        "users": {
+          user: user,
+          password: password
+        }
+      }
+    }
+    await usersCollection.updateOne(query, updateDocument)
+    let usersArr = (await usersCollection.findOne({})).users;
+    console.log(usersArr)
+  } catch(err) {
+    console.error(err)
+    throw err
+  }
 })
