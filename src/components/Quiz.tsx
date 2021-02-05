@@ -7,6 +7,8 @@ import {getQuestions, getInitialVals} from './DBData';
 import Loading from './Loading';
 
 interface Props {
+  username: string;
+  setUsername: (arg0: string) => void;
   questions: {
     type: string;
     question: string;
@@ -18,7 +20,7 @@ interface Props {
   setSelection: ({}) => void;
 }
 
-const Quiz: React.FC<Props> = ({questions, selection, setRandQuestions, setSelection}) => {
+const Quiz: React.FC<Props> = ({username, setUsername, questions, selection, setRandQuestions, setSelection}) => {
 
   const [loading, setLoading] = useState(true);
   //only runs on page load; generates new questions and clear selections each time
@@ -53,13 +55,13 @@ const Quiz: React.FC<Props> = ({questions, selection, setRandQuestions, setSelec
 
   if(loading) return (
     <>
-      <Nav />
+      <Nav username={username} setUsername={setUsername} />
       <Loading />
     </>
   )
   return (
     <>
-      <Nav />
+      <Nav username={username} setUsername={setUsername} />
 
       <form onSubmit={handleSubmit} style={{padding: 10}}>
         <div className="block" style={{margin: "1em 1em"}}>

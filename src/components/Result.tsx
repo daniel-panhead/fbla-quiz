@@ -8,6 +8,8 @@ import QuestionWrapper from './QuestionWrapper'
 import { Link } from 'react-router-dom';
 
 interface Props {
+  username: string;
+  setUsername: (arg0: string) => void;
   questions: {
     type: string;
     question: string;
@@ -34,7 +36,7 @@ let dialogOptions = {
   ]
 }
 
-const Result: React.FC<Props> = ({questions, selection, setSelection}) => {
+const Result: React.FC<Props> = ({username, setUsername, questions, selection, setSelection}) => {
 
   const handlePrint = (() => {
     let win = remote.getCurrentWindow();
@@ -54,9 +56,10 @@ const Result: React.FC<Props> = ({questions, selection, setSelection}) => {
 
   return (
     <>
-      <Nav />
+      <Nav username={username} setUsername={setUsername} />
       <div className="block" style={{margin: "1em 1em"}}>
         <h1 className="title is-1">Score Report</h1>
+        <h1 className="subtitle"><b>User:</b>&nbsp;{username}</h1>
         <div className="buttons">
           <button onClick={handlePrint} className="button is-link no-print" id="print">Export to PDF &nbsp;<FontAwesomeIcon icon="file-pdf" /></button>
           <Link className="button is-success no-print" to="/quiz">Restart</Link>
