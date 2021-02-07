@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
-
+const image = require('../../assets/fbla-logo-2.png')
 
 const Nav: React.FC<{username: string; setUsername: (arg0: string) => void;}> = ({username, setUsername}) => {
   
@@ -14,7 +14,7 @@ const Nav: React.FC<{username: string; setUsername: (arg0: string) => void;}> = 
     <nav className="navbar is-light no-print">
       <div className="navbar-brand">
         <span className="navbar-item">
-          <img src={require('../images/fbla-logo-2.png')} alt="FBLA logo" />
+          <img src={image} alt="FBLA logo" />
         </span>
         <Link to="/dashboard" className="navbar-item">Back to dashboard</Link>
       </div>

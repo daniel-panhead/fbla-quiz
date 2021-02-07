@@ -97,6 +97,23 @@ export const addUser = async (user: string, password: string) => {
   }
 }
 
+export const delUser = async (user: string) => {
+  try {
+    await ipcRenderer.invoke('del-user', user)
+  } catch(err) {
+    throw err;
+  } 
+}
+
+export const changePasswd = async (user: string, newPassword: string) => {
+  try {
+    await ipcRenderer.invoke('change-passwd', user, newPassword)
+  } catch(err) {
+    throw err;
+  } 
+}
+
+
 export const addResult = async (user: string, result: {}, randQuestionIndexes: number[], startTime: number, score: number) => {
   try {
     await ipcRenderer.invoke('add-result', user, result, randQuestionIndexes, startTime, score);

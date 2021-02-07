@@ -30,7 +30,8 @@ module.exports = [
       {
         loader: 'file-loader',
         options: {
-          esModule: false
+          esModule: false,
+          name: '[hash]-[name].[ext]'
         }
       },
     ],
