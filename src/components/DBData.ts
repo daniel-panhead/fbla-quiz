@@ -17,7 +17,12 @@ const getRand = (min: number, max: number) => {
 }
 
 export const getQuestions = async () => {
-  const {questions} = (await ipcRenderer.invoke('get-questions')).questions;
+  const questions: Props = (await ipcRenderer.invoke('get-questions')).questions;
+  return questions.questions;
+}
+
+export const getRandQuestions = async () => {
+  const questions = await getQuestions();
 
   let questionArr: {
     type: string;
@@ -46,8 +51,12 @@ export const getQuestions = async () => {
       }
     }
   }
-  const randQuestions = questionArr.map((question) => questions[question.index]);
-  return(randQuestions)
+  let randIndex: number[] = []
+  const randQuestions = questionArr.map((randQuestion) => {
+    randIndex.push(randQuestion.index)
+    return questions[randQuestion.index]
+  });
+  return({questions: randQuestions, indexes: randIndex})
 }
 
 export const getInitialVals = ((questions: {}[]) => {
@@ -65,7 +74,11 @@ export const getUsers = async () => {
     const users: {
       users: [{
         user: string,
-        password: string
+        password: string,
+        results?: [{
+          selection: {},
+          questionIndexes: []
+        }]
       }]
     } = (await ipcRenderer.invoke('get-users')).users;
     return users;
@@ -77,6 +90,14 @@ export const getUsers = async () => {
 export const addUser = async (user: string, password: string) => {
   try {
     await ipcRenderer.invoke('add-user', user, password);
+  } catch(err) {
+    throw err;
+  }
+}
+
+export const addResult = async (user: string, result: {}, randQuestionIndexes: number[], startTime: number) => {
+  try {
+    await ipcRenderer.invoke('add-result', user, result, randQuestionIndexes, startTime);
   } catch(err) {
     throw err;
   }

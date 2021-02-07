@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
-import {remote} from 'electron';
+import React, { useState } from 'react'
+import {remote, ipcRenderer} from 'electron';
 let fs = remote.require('fs');
 let path = remote.require('path');
 import Nav from './Nav'
 import QuestionWrapper from './QuestionWrapper'
+import {addResult} from './DBData';
 import { Link } from 'react-router-dom';
 
 interface Props {
@@ -17,7 +18,8 @@ interface Props {
     answer: string;
   }[];
   selection: {};
-  setSelection: ({}) => void;
+  randQuestionIndexes?: number[];
+  startTime: number;
 }
 
 
@@ -36,7 +38,10 @@ let dialogOptions = {
   ]
 }
 
-const Result: React.FC<Props> = ({username, setUsername, questions, selection, setSelection}) => {
+const Result: React.FC<Props> = ({username, setUsername, questions, selection, randQuestionIndexes, startTime}) => {
+
+  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveError, setSaveError] = useState(false);
 
   const handlePrint = (() => {
     let win = remote.getCurrentWindow();
@@ -46,12 +51,30 @@ const Result: React.FC<Props> = ({username, setUsername, questions, selection, s
         const pdfPath = userPath;
         fs.writeFile(pdfPath, data, (error: any) => {
           if (error) throw error
-          console.log(`Wrote PDF successfully to ${pdfPath}`)
+          setSaveError(false);
+          setSaveSuccess(true);
         })
       }
     }).catch(error => {
       console.log(`Failed to write PDF`, error)
+      setSaveError(true);
+      setSaveSuccess(false);
     })
+  })
+
+  const handleSaveResult = (() => {
+    const saveAsync = (async () => {
+      try {
+        await addResult(username, selection, randQuestionIndexes, startTime);
+        setSaveError(false);
+        setSaveSuccess(true);
+      } catch(error) {
+        console.log(`Error: `, error)
+        setSaveError(true);
+        setSaveSuccess(false);
+      }
+    })
+    saveAsync();
   })
 
   return (
@@ -62,10 +85,14 @@ const Result: React.FC<Props> = ({username, setUsername, questions, selection, s
         <h1 className="subtitle"><b>User:</b>&nbsp;{username}</h1>
         <div className="buttons">
           <button onClick={handlePrint} className="button is-link no-print" id="print">Export to PDF &nbsp;<FontAwesomeIcon icon="file-pdf" /></button>
+          {(randQuestionIndexes && randQuestionIndexes.length > 0) && 
+            <button onClick={handleSaveResult} className="button is-primary no-print" id="print">Save to Account &nbsp;<FontAwesomeIcon icon="save" /></button>
+          }
+          <p className={saveSuccess ? "help is-success" : saveError ? "help is-danger" : "help is-danger"}>{saveSuccess ? "Successfully saved" : saveError ? "An error occurred while saving. Please try again" : "An error occurred. Please try again"}</p>
           <Link className="button is-success no-print" to="/quiz">Restart</Link>
         </div>
         
-        <QuestionWrapper mode="result" questions={questions} selection={selection} setSelection={setSelection} />
+        <QuestionWrapper mode="result" questions={questions} selection={selection} />
       </div>
     </>
   )

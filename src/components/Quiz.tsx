@@ -3,7 +3,7 @@ import {useHistory} from 'react-router-dom';
 import Nav from './Nav';
 
 import QuestionWrapper from './QuestionWrapper';
-import {getQuestions, getInitialVals} from './DBData';
+import {getRandQuestions, getInitialVals} from './DBData';
 import Loading from './Loading';
 
 interface Props {
@@ -18,9 +18,11 @@ interface Props {
   selection: {[key: string]: string};
   setRandQuestions: ({}) => void;
   setSelection: ({}) => void;
+  setRandQuestionIndexes: ([]) => void;
+  setStartTime: (arg0: number) => void;
 }
 
-const Quiz: React.FC<Props> = ({username, setUsername, questions, selection, setRandQuestions, setSelection}) => {
+const Quiz: React.FC<Props> = ({username, setUsername, questions, selection, setRandQuestions, setSelection, setRandQuestionIndexes, setStartTime}) => {
 
   const [loading, setLoading] = useState(true);
   //only runs on page load; generates new questions and clear selections each time
@@ -28,11 +30,12 @@ const Quiz: React.FC<Props> = ({username, setUsername, questions, selection, set
     const fetchQuestions = (async () => {
       try {
         setLoading(true);
-        const questions = await getQuestions();
+        const {questions, indexes} = await getRandQuestions();
         setRandQuestions(questions);
+        setRandQuestionIndexes(indexes);
         setSelection(getInitialVals(questions));
         setLoading(false);
-        console.log("done")
+        setStartTime(Date.now());
       } catch(err) {
         setLoading(false);
         console.error(err);
