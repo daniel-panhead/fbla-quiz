@@ -104,7 +104,7 @@ const Dashboard: React.FC<Props> = ({username, setUsername, setRandQuestions, se
         </div>
         <div className="block">
           <div className="buttons">
-            <button className="button is-info">Manage account</button>
+            {/* <button className="button is-info">Manage account</button> */}
             <Link to="/quiz" className="button is-success">Start quiz!</Link>
           </div>
           
