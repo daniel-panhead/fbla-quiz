@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Question from './Question';
 import MC from './question-types/MC';
 import FTB from './question-types/FTB';
@@ -13,6 +13,7 @@ interface Props {
   }[];
   selection: {[key: string]: string};
   setSelection?: ({}) => void;
+  setScore?: (arg0: number) => void;
   mode?: "quiz" | "result";
 }
 
@@ -32,10 +33,16 @@ const calculateScore = (questions: Props['questions'], selection: Props['selecti
   return score;
 }
 
-const Score: React.FC<{questions: Props["questions"], selection: Props["selection"]}> = (({questions, selection}) => {
+const Score: React.FC<{questions: Props["questions"], selection: Props["selection"], setScore: Props["setScore"]}> = (({questions, selection, setScore}) => {
   let score = calculateScore(questions, selection);
   let total = Object.keys(selection).length
   let percent = ((score/total)*100).toFixed(2);
+  //can't set states while stuff is rendering
+  useEffect(() => {
+    //cool rounding
+    setScore(Math.round(((score/total) + Number.EPSILON) * 100) / 100);
+  }, [])
+  
   return (
     <>
       <h1 className="title">Score: {percent}% ({score}/{total})</h1>
@@ -43,16 +50,15 @@ const Score: React.FC<{questions: Props["questions"], selection: Props["selectio
   )
 })
 
-const QuestionWrapper: React.FC<Props> = ({questions, selection, setSelection, mode}) => {
+const QuestionWrapper: React.FC<Props> = ({questions, selection, setSelection, setScore, mode}) => {
   const editable = (mode=="quiz") ? true : false;
-
   let counter = 0;
   return (
     <div>
       
       <div>
       {!editable &&
-        <Score questions={questions} selection={selection}/>
+        <Score questions={questions} selection={selection} setScore={setScore} />
       }
         <ol>
           {questions.map((question) => {
@@ -89,6 +95,7 @@ const QuestionWrapper: React.FC<Props> = ({questions, selection, setSelection, m
 
 QuestionWrapper.defaultProps = {
   mode: "quiz",
-  setSelection: (selection) => {} //if we are in display mode don't let the selection be changed
+  setSelection: (selection) => {}, //if we are in display mode don't let the selection be changed
+  setScore: (score) => {}
 }
 export default QuestionWrapper

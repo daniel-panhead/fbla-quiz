@@ -19,7 +19,7 @@ interface Props {
   }[];
   selection: {};
   randQuestionIndexes?: number[];
-  startTime: number;
+  startTime?: number;
 }
 
 
@@ -40,8 +40,10 @@ let dialogOptions = {
 
 const Result: React.FC<Props> = ({username, setUsername, questions, selection, randQuestionIndexes, startTime}) => {
 
-  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [savePDFSuccess, setSavePDFSuccess] = useState(false);
+  const [saveUploadSuccess, setSaveUploadSuccess] = useState(false);
   const [saveError, setSaveError] = useState(false);
+  const [score, setScore] = useState(0);
 
   const handlePrint = (() => {
     let win = remote.getCurrentWindow();
@@ -52,26 +54,30 @@ const Result: React.FC<Props> = ({username, setUsername, questions, selection, r
         fs.writeFile(pdfPath, data, (error: any) => {
           if (error) throw error
           setSaveError(false);
-          setSaveSuccess(true);
+          setSaveUploadSuccess(false);
+          setSavePDFSuccess(true);
         })
       }
     }).catch(error => {
-      console.log(`Failed to write PDF`, error)
+      console.error(`Failed to write PDF`, error)
       setSaveError(true);
-      setSaveSuccess(false);
+      setSaveUploadSuccess(false);
+      setSavePDFSuccess(false);
     })
   })
 
   const handleSaveResult = (() => {
     const saveAsync = (async () => {
       try {
-        await addResult(username, selection, randQuestionIndexes, startTime);
+        await addResult(username, selection, randQuestionIndexes, startTime, score);
         setSaveError(false);
-        setSaveSuccess(true);
+        setSaveUploadSuccess(true);
+        setSavePDFSuccess(false);
       } catch(error) {
-        console.log(`Error: `, error)
+        console.error(`Error: `, error)
         setSaveError(true);
-        setSaveSuccess(false);
+        setSaveUploadSuccess(false);
+        setSavePDFSuccess(false);
       }
     })
     saveAsync();
@@ -85,14 +91,26 @@ const Result: React.FC<Props> = ({username, setUsername, questions, selection, r
         <h1 className="subtitle"><b>User:</b>&nbsp;{username}</h1>
         <div className="buttons">
           <button onClick={handlePrint} className="button is-link no-print" id="print">Export to PDF &nbsp;<FontAwesomeIcon icon="file-pdf" /></button>
-          {(randQuestionIndexes && randQuestionIndexes.length > 0) && 
-            <button onClick={handleSaveResult} className="button is-primary no-print" id="print">Save to Account &nbsp;<FontAwesomeIcon icon="save" /></button>
+          
+          {(randQuestionIndexes && randQuestionIndexes.length > 0) &&
+            <>
+              <button onClick={handleSaveResult} className="button is-primary no-print" id="print">Save to Account &nbsp;<FontAwesomeIcon icon="save" /></button>   
+              <Link className="button is-success no-print" to="/quiz">Restart</Link>
+            </>
           }
-          <p className={saveSuccess ? "help is-success" : saveError ? "help is-danger" : "help is-danger"}>{saveSuccess ? "Successfully saved" : saveError ? "An error occurred while saving. Please try again" : "An error occurred. Please try again"}</p>
-          <Link className="button is-success no-print" to="/quiz">Restart</Link>
+          
         </div>
-        
-        <QuestionWrapper mode="result" questions={questions} selection={selection} />
+        {(savePDFSuccess || saveUploadSuccess || saveError) &&
+            <p className={savePDFSuccess||saveUploadSuccess ? "help is-success no-print" : saveError ? "help is-danger no-print" : "help is-danger no-print"}>
+              {savePDFSuccess ? "PDF successfully saved" :
+                saveUploadSuccess ? "Results successfully uploaded" : 
+                saveError ? "An error occurred while saving. Please try again" :
+                "An error occurred. Please try again"
+              }
+            </p>
+        }
+
+        <QuestionWrapper mode="result" questions={questions} selection={selection} setScore={setScore} />
       </div>
     </>
   )
