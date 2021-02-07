@@ -77,7 +77,9 @@ export const getUsers = async () => {
         password: string,
         results?: [{
           selection: {},
-          questionIndexes: []
+          questionIndexes: [],
+          startTime: number,
+          score: number
         }]
       }]
     } = (await ipcRenderer.invoke('get-users')).users;
@@ -95,10 +97,14 @@ export const addUser = async (user: string, password: string) => {
   }
 }
 
-export const addResult = async (user: string, result: {}, randQuestionIndexes: number[], startTime: number) => {
+export const addResult = async (user: string, result: {}, randQuestionIndexes: number[], startTime: number, score: number) => {
   try {
-    await ipcRenderer.invoke('add-result', user, result, randQuestionIndexes, startTime);
+    await ipcRenderer.invoke('add-result', user, result, randQuestionIndexes, startTime, score);
   } catch(err) {
     throw err;
   }
+}
+
+export const delResult = async (user: string, startTime: number) => {
+  await ipcRenderer.invoke('del-result', user, startTime)
 }

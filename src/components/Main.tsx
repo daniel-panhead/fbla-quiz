@@ -61,8 +61,11 @@ const Main = () => {
           <Result username={username} setUsername={setUsername} questions={randQuestions} selection={selection} 
           startTime={startTime} randQuestionIndexes={randQuestionIndexes} />
         </Route>
+        <Route path="/review">
+          <Result username={username} setUsername={setUsername} questions={randQuestions} selection={selection} />
+        </Route>
         <Route path="/dashboard">
-          <Dashboard username={username} setUsername={setUsername} />
+          <Dashboard username={username} setUsername={setUsername} setRandQuestions={setRandQuestions} setSelection={setSelection} />
         </Route>
       </Switch>
     </Router>

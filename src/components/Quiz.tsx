@@ -52,7 +52,6 @@ const Quiz: React.FC<Props> = ({username, setUsername, questions, selection, set
     for(let i = 1; i <= Object.keys(selection).length; i++) {
       selection[`question${i}`] = selection[`question${i}`].trim();
     }
-    console.log(selection);
     history.push('/result');
   }
 
