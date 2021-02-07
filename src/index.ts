@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain} from 'electron';
 import {MongoClient} from 'mongodb';
+import path from 'path';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 const uri = "mongodb+srv://userAdmin:***REMOVED***@cluster0.ojeo0.mongodb.net/<dbname>?retryWrites=true&w=majority";
@@ -13,12 +14,15 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 
 const createWindow = (): void => {
   // Create the browser window.
+  console.log(__dirname)
   const mainWindow = new BrowserWindow({
-    height: 600,
-    width: 800,
+    height: 720,
+    width: 1280,
+    icon: path.join(__dirname, 'assets/icon.png'),
     webPreferences: {
       enableRemoteModule: true,
-      nodeIntegration: true
+      nodeIntegration: true,
+      //devTools: false
     }
   });
   // and load the index.html of the app.
@@ -86,12 +90,47 @@ ipcMain.handle('add-user', async (event, user: string, password: string) => {
       }
     }
     await usersCollection.updateOne(query, updateDocument)
-    let usersArr = (await usersCollection.findOne({})).users;
   } catch(err) {
     console.error(err)
     throw err
   }
 })
+
+ipcMain.handle('del-user', async (event, user: string) => {
+  const usersCollection = client.db("fbla-quiz").collection("users");
+  const query = {_id: "601d89cb83c4ea82117fbea6"} //users database
+  const updateDocument = {
+    $pull: {
+      "users": {
+        user: user
+      }
+    }
+  }
+  await usersCollection.updateOne(query, updateDocument)
+})
+
+ipcMain.handle('change-passwd', async (event, user: string, newPasswd: string) => {
+  try {
+    const usersCollection = client.db("fbla-quiz").collection("users");
+    const query = {_id: "601d89cb83c4ea82117fbea6"} //users database
+    const updateDocument = {
+      $set: {
+        "users.$[userFilter].password": newPasswd
+      }
+    }
+    //match the array that contains user data for {user}
+    const options = {
+      arrayFilters: [{
+        "userFilter.user": user
+      }]
+    }
+    await usersCollection.updateOne(query, updateDocument, options)
+  } catch(err) {
+    console.error(err)
+    throw err
+  }
+})
+
 
 ipcMain.handle('add-result', async (event, user: string, selection: {}, questionIndexes: number[], startTime: number, score: number) => {
   try {

@@ -3,7 +3,7 @@ import {Link, useHistory} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import bcrypt from 'bcryptjs';
 import {getUsers, addUser} from './DBData';
-const image =  require('../images/fbla-logo.png');
+const image =  require('../../assets/fbla-logo.png');
 
 interface UserProps {
   username: string;
