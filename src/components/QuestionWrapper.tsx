@@ -12,7 +12,7 @@ interface Props {
     answer: string;
   }[];
   selection: {[key: string]: string};
-  setSelection: ({}) => void;
+  setSelection?: ({}) => void;
   mode?: "quiz" | "result";
 }
 
@@ -88,6 +88,7 @@ const QuestionWrapper: React.FC<Props> = ({questions, selection, setSelection, m
 }
 
 QuestionWrapper.defaultProps = {
-  mode: "quiz"
+  mode: "quiz",
+  setSelection: (selection) => {} //if we are in display mode don't let the selection be changed
 }
 export default QuestionWrapper

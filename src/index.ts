@@ -87,6 +87,33 @@ ipcMain.handle('add-user', async (event, user: string, password: string) => {
     }
     await usersCollection.updateOne(query, updateDocument)
     let usersArr = (await usersCollection.findOne({})).users;
+  } catch(err) {
+    console.error(err)
+    throw err
+  }
+})
+
+ipcMain.handle('add-result', async (event, user: string, selection: {}, questionIndexes: number[], startTime: number) => {
+  try {
+    const usersCollection = client.db("fbla-quiz").collection("users");
+    const query = {_id: "601d89cb83c4ea82117fbea6"} //users database
+    const updateDocument = {
+      $push: {
+        "users.$[userFilter].results": {
+          questionIndexes: questionIndexes,
+          selection: selection,
+          startTime: startTime
+        }
+      }
+    }
+    //match the array that contains user data for {user}
+    const options = {
+      arrayFilters: [{
+        "userFilter.user": user
+      }]
+    }
+    await usersCollection.updateOne(query, updateDocument, options)
+    let usersArr = (await usersCollection.findOne({})).users;
     console.log(usersArr)
   } catch(err) {
     console.error(err)

@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import {ipcRenderer} from 'electron';
-import {getQuestions, getInitialVals, getUsers, Props} from './DBData';
+import {getRandQuestions, getInitialVals, getUsers, Props} from './DBData';
 import Title from './Title';
 import Quiz from './Quiz';
 import Result from './Result';
@@ -16,8 +16,12 @@ const Main = () => {
   const [username, setUsername] = useState("");
   //initialize random questions state
   const [randQuestions, setRandQuestions] = useState<Props["questions"]>();
-  //create state that holds values of selected questions
+  //hold indexes of rand questions for saving
+  const [randQuestionIndexes, setRandQuestionIndexes] = useState<number[] | null>([]);
+  //create state that holds values of user selections
   const [selection, setSelection] = useState<{[key: string]: string}>();
+  //quiz start time
+  const [startTime, setStartTime] = useState(0);
   //loading state
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -25,11 +29,11 @@ const Main = () => {
       try {
         setLoading(true);
         await ipcRenderer.invoke('get-db');
-        const questions = await getQuestions();
+        const {questions, indexes} = await getRandQuestions();
         setRandQuestions(questions);
+        setRandQuestionIndexes(indexes);
         setSelection(getInitialVals(questions));
         setLoading(false);
-        console.log("questions fetched")
       } catch(err) {
         setLoading(false);
         console.error(err);
@@ -50,10 +54,12 @@ const Main = () => {
           <Title username={username} setUsername={setUsername} />
         </Route>
         <Route path="/quiz">
-          <Quiz username={username} setUsername={setUsername} questions={randQuestions} setRandQuestions={setRandQuestions} setSelection={setSelection} selection={selection}/>
+          <Quiz username={username} setUsername={setUsername} questions={randQuestions} setRandQuestions={setRandQuestions} 
+          setSelection={setSelection} selection={selection} setRandQuestionIndexes={setRandQuestionIndexes} setStartTime={setStartTime} />
         </Route>
         <Route path="/result">
-          <Result username={username} setUsername={setUsername} questions={randQuestions} selection={selection} setSelection={setSelection} />
+          <Result username={username} setUsername={setUsername} questions={randQuestions} selection={selection} 
+          startTime={startTime} randQuestionIndexes={randQuestionIndexes} />
         </Route>
         <Route path="/dashboard">
           <Dashboard username={username} setUsername={setUsername} />

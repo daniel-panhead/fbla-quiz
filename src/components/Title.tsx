@@ -20,8 +20,8 @@ const UserForm: React.FC<UserProps> = ({username, setUsername, password, setPass
           <span className="icon">
             <FontAwesomeIcon icon="user" />
           </span>
-          <input className="input" type="text" name="username" placeholder="Username" 
-          value={username} onChange={(e) => setUsername(e.target.value)} autoFocus />
+          <input className="input" pattern="[A-Za-z0-9._-]+" title="Only alphanumeric characters, dots(.), underscores(_), and dashes(-) allowed" type="text" name="username" placeholder="Username" 
+          value={username} onChange={(e) => setUsername(e.target.value)} autoFocus required />
         </div>
       </div>
       <div className="field">
@@ -29,8 +29,8 @@ const UserForm: React.FC<UserProps> = ({username, setUsername, password, setPass
           <span className="icon">
             <FontAwesomeIcon icon="key" />
           </span>
-          <input className="input" type="password" name="password" placeholder="Password" 
-          value={password} onChange={(e) => setPassword(e.target.value)}/>
+          <input className="input" pattern="[A-Za-z0-9._-]+" title="Only alphanumeric characters, dots(.), underscores(_), and dashes(-) allowed" type="password" name="password" placeholder="Password" 
+          value={password} onChange={(e) => setPassword(e.target.value)} required />
         </div>
       </div>
     </>
@@ -64,7 +64,6 @@ const Title: React.FC<{username: string; setUsername: (arg0: string) => void}> =
   const onLogin = ((e: React.FormEvent) => {
     const getData = (async () => {
       e.preventDefault();
-      console.log("Login")
       const {users} = await getUsers();
       const dbUser = users.find((user) => user.user == username)
       //user exists and correct password hash
@@ -93,6 +92,7 @@ const Title: React.FC<{username: string; setUsername: (arg0: string) => void}> =
           setAuthSuccess(true);
         } catch(err) {
           console.error(err)
+          setError(true)
           return;
         }
       }
