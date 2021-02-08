@@ -1,8 +1,8 @@
 {
   "name": "fbla-quiz",
-  "productName": "fbla-quiz",
+  "productName": "FBLA Quiz",
   "version": "1.0.0",
-  "description": "FBLA Quiz",
+  "description": "Test your FBLA knowledge",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",

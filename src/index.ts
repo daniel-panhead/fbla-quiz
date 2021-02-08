@@ -22,12 +22,12 @@ const createWindow = (): void => {
     webPreferences: {
       enableRemoteModule: true,
       nodeIntegration: true,
-      //devTools: false
+      devTools: false
     }
   });
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  
+  mainWindow.removeMenu();
 }
 
 app.on('ready', createWindow);
