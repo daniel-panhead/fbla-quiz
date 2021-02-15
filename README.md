@@ -6,21 +6,25 @@ Electron provides for easy user interaction and cross-platform compatibility sin
 React allows for dynamic pages and Typescript streamlines the development process.  
 Questions and user profiles are stored in a MongoDB database on the cloud.
 
-## Starting
+All source/build files are located in src/.
+
+# Running the Program
+Extract the entire folder. Once extraction is complete, navigate to the extracted folder and run "FBLA Quiz.exe"
 Upon loading the program, users are presented with the title page.
 
 ## Title
-On the title page, users can choose to log in with a previous account or register a new account.
+On the title page, users can choose to log in with a previous account or sign up for a new account. You must sign up for a new account if you are a new user.
 
-### Register
-Users can enter their desired username and password and click "Sign up". You cannot create a new account with the same username as an existing account. Passwords can only contain alphanumeric characters, space, underscore, and dash. Passwords are hashed before being sent to the server so no plaintext passwords are ever stored.
+### New User
+Upon clicking "New User", the registration form will appear. Users can enter their desired username and password and click "Sign up". You cannot create a new account with the same username as an existing account. Passwords can only contain alphanumeric characters, space, underscore, and dash. Passwords are hashed before being sent to the server so no plaintext passwords are ever stored.
 
-### Login
-If you have an existing account, you can enter your credentials in the Login section. If they match the credentials of an existing user account, you will be brought to the dashboard.
+### Returning User
+If you have an existing account, you can enter your credentials by clicking "Returning User". Upon clicking "Log in", your credentials will be submitted. If they match the credentials of an existing user account, you will be brought to the dashboard.
 
 ## Dashboard
 Once logged in, the user is brought to the dashboard. A navbar is displayed on the top which allows navigation back to the dashboard and lets you log out.  
-The user can change their password by clicking "Change Password". Enter your old password and new desired password. Password requirements follow the same format as registering.  
+Saved test results can be viewed in the lower section of the dashboard.  
+The user can change their password by clicking "Change Password". Enter your old password and new desired password. Password requirements follow the same format as sign-up.  
 The account can also be deleted by clicking "Delete Account". The user must confirm that they want to delete.
 
 The quiz can be started by pressing the "Start Quiz!" button. Previously saved results can also be viewed.

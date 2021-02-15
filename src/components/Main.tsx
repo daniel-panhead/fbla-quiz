@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import {ipcRenderer} from 'electron';
-import {getRandQuestions, getInitialVals, getUsers, Props} from './DBData';
+import {getRandQuestions, getInitialVals, Props} from './DBData';
 import Title from './Title';
 import Quiz from './Quiz';
 import Result from './Result';
@@ -24,6 +24,8 @@ const Main = () => {
   const [startTime, setStartTime] = useState(0);
   //loading state
   const [loading, setLoading] = useState(true);
+
+  //fetch questions/set states on page load
   useEffect(() => {
     const fetchQuestions = (async () => {
       try {

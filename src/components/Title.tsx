@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import bcrypt from 'bcryptjs';
 import {getUsers, addUser} from './DBData';
@@ -44,8 +44,10 @@ const Title: React.FC<{username: string; setUsername: (arg0: string) => void}> =
   const [invalidLogin, setInvalidLogin] = useState(false);
   const [error, setError] = useState(false);
   const [authSuccess, setAuthSuccess] = useState(false);
+  const [showSignupNotif, setShowSignupNotif] = useState(true);
 
   const history = useHistory();
+  //user clicks login button; show the login form
   const handleLogin = (() => {
     setInvalidLogin(false);
     setAuthSuccess(false);
@@ -53,14 +55,17 @@ const Title: React.FC<{username: string; setUsername: (arg0: string) => void}> =
     setPassword("");
     setMode((mode=="login") ? "hidden" : "login")
   })
+  //user clicks signup button; show the signup form
   const handleSignup = (() => {
     setInvalidLogin(false);
     setAuthSuccess(false);
     setUsername("")
     setPassword("");
+    setShowSignupNotif(true);
     setMode((mode=="signup") ? "hidden" : "signup")
   })
 
+  //login form submitted
   const onLogin = ((e: React.FormEvent) => {
     const getData = (async () => {
       e.preventDefault();
@@ -77,6 +82,7 @@ const Title: React.FC<{username: string; setUsername: (arg0: string) => void}> =
     })
     getData();
   })
+  //signup form submitted
   const onSignup = ((e: React.FormEvent) => {
     const getData = (async () => {
       e.preventDefault();
@@ -101,6 +107,10 @@ const Title: React.FC<{username: string; setUsername: (arg0: string) => void}> =
     getData();
   })
 
+  const deleteNotification = (() => {
+    setShowSignupNotif(false);
+  })
+
   return (
     <div>
       <section className="section">
@@ -122,9 +132,9 @@ const Title: React.FC<{username: string; setUsername: (arg0: string) => void}> =
       <div className="block">
           <div className="level">
             <div className="level-item">
-                <button id="login" onClick={handleLogin} className="button is-success">Login</button>
-                &nbsp;
-                <button id="signup" onClick={handleSignup} className="button is-link">Signup</button>
+              <button id="signup" onClick={handleSignup} className="button is-success">New User</button>
+              &nbsp;
+              <button id="login" onClick={handleLogin} className="button is-link">Returning User</button>   
             </div>
           </div>
           { mode == "login" && 
@@ -151,28 +161,36 @@ const Title: React.FC<{username: string; setUsername: (arg0: string) => void}> =
             </div>
           }
           { mode == "signup" &&
-            <div className="level">
-              <div className="level-item">
-                <form onSubmit={onSignup}>
-                  <UserForm username={username} setUsername={setUsername} password={password} setPassword={setPassword}/>
-                  <div className="field">
-                    <div className="control">
-                    {(invalidLogin || error) &&
-                      <p className="help is-danger">
-                        {invalidLogin ? "Username already exists"
-                        : error ? "Something went wrong. Please try again": "Something went wrong. Please try again"}
-                      </p>
-                    }
-                    {authSuccess &&
-                      <p className="help is-success">Username successfully added. Please login</p>
-                    }
-                    
-                    <input type="submit" className="button is-info" value="Sign up" />
+            <>
+              {showSignupNotif && 
+                <div className="notification is-info" style={{margin: "1em 10em"}}>
+                  <button className="delete" onClick={deleteNotification}></button>
+                  New user? Enter your desired username and password, then click "Sign up". Usernames and passwords can only contain alphanumeric characters, underscores, dots, and dashes.
+                </div>
+              }
+              <div className="level">
+                <div className="level-item">
+                  <form onSubmit={onSignup}>
+                    <UserForm username={username} setUsername={setUsername} password={password} setPassword={setPassword}/>
+                    <div className="field">
+                      <div className="control">
+                      {(invalidLogin || error) &&
+                        <p className="help is-danger">
+                          {invalidLogin ? "Username already exists"
+                          : error ? "Something went wrong. Please try again": "Something went wrong. Please try again"}
+                        </p>
+                      }
+                      {authSuccess &&
+                        <p className="help is-success">Username successfully added. Please login</p>
+                      }
+                      
+                      <input type="submit" className="button is-info" value="Sign up" />
+                      </div>
                     </div>
-                  </div>
-                </form>
+                  </form>
+                </div>
               </div>
-            </div>
+            </>
           }
         </div>
     </div>

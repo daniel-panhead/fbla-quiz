@@ -122,3 +122,10 @@ select {
 	text-align: center;
 	min-height: 100vh;
 }
+
+.help-icon {
+  color: black;
+}
+.help-icon:hover {
+  color: rgb(150, 150, 150);
+}
