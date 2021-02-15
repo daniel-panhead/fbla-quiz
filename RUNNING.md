@@ -5,14 +5,14 @@ Upon loading the program, users are presented with the title page.
 ## Title
 On the title page, users can choose to log in with a previous account or sign up for a new account. You must sign up for a new account if you are a new user. There is also a help button containing detailed instructions for navigating through the page.
 
-## Help
-The help modal contains sections for each page in the program. Click on the relevant tab to find instructions for navigating through that page.
-
 ### New User
 Upon clicking "New User", the registration form will appear. Users can enter their desired username and password and click "Sign up". You cannot create a new account with the same username as an existing account. Passwords can only contain alphanumeric characters, space, underscore, and dash. Passwords are hashed with bcrypt before being sent to the MongoDB database so no plaintext passwords are ever stored.
 
 ### Returning User
 If you have an existing account, you can enter your credentials by clicking "Returning User". Upon clicking "Log in", your credentials will be submitted. If they match the credentials of an existing user account, you will be brought to the dashboard.
+
+## Help
+The help modal contains sections for each page in the program. Click on the relevant tab to find instructions for navigating through that page.
 
 ## Dashboard
 Once logged in, the user is brought to the dashboard. A navbar is displayed on the top which allows navigation back to the dashboard and lets you log out.  
