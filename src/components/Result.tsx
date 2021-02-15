@@ -80,7 +80,7 @@ const Result: React.FC<Props> = ({username, setUsername, questions, selection, r
         setSavePDFSuccess(false);
       }
     })
-    saveAsync();
+    if(!saveUploadSuccess) saveAsync();
   })
 
   return (
