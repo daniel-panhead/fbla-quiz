@@ -2,7 +2,7 @@
 
 ## Take a quiz on your FBLA knowledge
 The quiz app is built on Node.js, Electron, React, Webpack, and Typescript and uses MongoDB for storage.  
-Refer to RUNNING.md for instructions about running the program.
+Refer to [RUNNING.md](./RUNNING.md) for instructions about running the program.
 
 Source files are located in src/.
 
