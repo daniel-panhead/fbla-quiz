@@ -3,6 +3,7 @@ import {useHistory} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import bcrypt from 'bcryptjs';
 import {getUsers, addUser} from './DBData';
+import Help from './Help';
 const image =  require('../../assets/fbla-logo.png');
 
 interface UserProps {
@@ -39,12 +40,19 @@ const UserForm: React.FC<UserProps> = ({username, setUsername, password, setPass
 
 const Title: React.FC<{username: string; setUsername: (arg0: string) => void}> = ({username, setUsername}) => {
 
+  //toggle showing login/signup forms
   const [mode, setMode] = useState("hidden");
+
   const [password, setPassword] = useState("");
+
+  //error/success messages status
   const [invalidLogin, setInvalidLogin] = useState(false);
   const [error, setError] = useState(false);
   const [authSuccess, setAuthSuccess] = useState(false);
+
+
   const [showSignupNotif, setShowSignupNotif] = useState(true);
+  const [helpActive, setHelpActive] = useState(false);
 
   const history = useHistory();
   //user clicks login button; show the login form
@@ -128,6 +136,10 @@ const Title: React.FC<{username: string; setUsername: (arg0: string) => void}> =
             <h1 className="title">Test your knowledge!</h1>
           </div>
         </div>
+        <div style={{textAlign: "center"}}>
+          <a onClick={() => setHelpActive(true)} className="help-icon"><FontAwesomeIcon icon="question-circle"/>&nbsp;Help!</a>
+        </div>
+        <Help helpActive={helpActive} setHelpActive={setHelpActive} />
       </div>
       <div className="block">
           <div className="level">

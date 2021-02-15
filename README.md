@@ -13,10 +13,10 @@ Extract the entire folder. Once extraction is complete, navigate to the extracte
 Upon loading the program, users are presented with the title page.
 
 ## Title
-On the title page, users can choose to log in with a previous account or sign up for a new account. You must sign up for a new account if you are a new user.
+On the title page, users can choose to log in with a previous account or sign up for a new account. You must sign up for a new account if you are a new user. There is also a help button containing detailed instructions for navigating through the page.
 
 ### New User
-Upon clicking "New User", the registration form will appear. Users can enter their desired username and password and click "Sign up". You cannot create a new account with the same username as an existing account. Passwords can only contain alphanumeric characters, space, underscore, and dash. Passwords are hashed before being sent to the server so no plaintext passwords are ever stored.
+Upon clicking "New User", the registration form will appear. Users can enter their desired username and password and click "Sign up". You cannot create a new account with the same username as an existing account. Passwords can only contain alphanumeric characters, space, underscore, and dash. Passwords are hashed with bcrypt before being sent to the MongoDB database so no plaintext passwords are ever stored.
 
 ### Returning User
 If you have an existing account, you can enter your credentials by clicking "Returning User". Upon clicking "Log in", your credentials will be submitted. If they match the credentials of an existing user account, you will be brought to the dashboard.
@@ -31,6 +31,9 @@ The quiz can be started by pressing the "Start Quiz!" button. Previously saved r
 
 ### Review
 Previously saved results can be viewed by clicking "View" on the saved result. Users can see their score and view correct/incorrect questions. The result can be exported to a PDF for printing. Results can also be deleted by clicking "Delete" on the saved result.
+
+## Navbar
+The navbar shows the currently logged-in user. You can click "Return to Dashboard" to return to the dashboard page. The navbar also contains a help button. Users can click on it at any time to see detailed instructions for navigating through their current page.
 
 ## Quiz
 Upon starting the quiz, you will be presented with the questions.
