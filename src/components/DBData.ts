@@ -1,5 +1,4 @@
 import {ipcRenderer} from 'electron';
-import {questions as jsonQuestions} from '../questions.json';
 
 export interface Props {
   questions: {

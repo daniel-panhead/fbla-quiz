@@ -14,15 +14,14 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 
 const createWindow = (): void => {
   // Create the browser window.
-  console.log(__dirname)
   const mainWindow = new BrowserWindow({
     height: 720,
     width: 1280,
     icon: path.join(__dirname, 'assets/icon.png'),
     webPreferences: {
       enableRemoteModule: true,
-      nodeIntegration: true,
-      devTools: false
+      devTools: false,
+      nodeIntegration: true
     }
   });
   // and load the index.html of the app.
