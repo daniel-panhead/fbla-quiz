@@ -1,6 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, {useState} from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import Help from './Help';
 const logo = require('../../assets/fbla-logo-2.png')
 
@@ -13,7 +13,6 @@ const Nav: React.FC<{username: string; setUsername: (arg0: string) => void;}> = 
   })
 
   const [helpActive, setHelpActive] = useState(false);
-  const location = useLocation();
 
   return (
     <>
@@ -36,10 +35,7 @@ const Nav: React.FC<{username: string; setUsername: (arg0: string) => void;}> = 
           </div>
         </div>
       </nav>
-      <div className={helpActive ? "modal is-active" : "modal"}>
-        <div onClick={() => setHelpActive(false)} className="modal-background"></div>
-        <Help setHelpActive={setHelpActive} path={location.pathname} />
-      </div>
+      <Help helpActive={helpActive} setHelpActive={setHelpActive} />
     </>
   )
 }

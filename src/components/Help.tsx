@@ -1,4 +1,9 @@
 import React, {useState} from 'react'
+import { useLocation } from 'react-router-dom'
+
+//title images
+const signUp = require('../../assets/sign-up.png')
+const logIn = require('../../assets/log-in.png')
 
 //dashboard images
 const changePassword = require('../../assets/change-password.png')
@@ -26,8 +31,39 @@ const saveToAccount = require('../../assets/save-to-account.png')
 const reviewReport = require('../../assets/review-report.png')
 
 interface Props {
+  helpActive: boolean;
   setHelpActive: (arg0: boolean) => void;
-  path: string;
+}
+
+const TitleHelp = () => {
+  return (
+    <>
+      <h1 className="title is-4">Title Screen</h1>
+      <div>
+        <p>Upon starting the program, the user is presented with the title screen.</p>
+      </div>
+      <br/>
+      <div>
+        <h1 className="title is-5">Sign Up</h1>
+        <p>Upon clicking "New User", the sign up form will appear. A notification banner will appear explaining the signup process.</p>
+        <img src={signUp} alt="Signup Form" />
+        <p>
+          Enter your desired username and password in the form and click "Sign up".
+          Usernames and passwords can only contain alphanumeric characters, underscores, dots, and dashes.
+        </p>
+        <p>All passwords are stored as secure bcrypt hashes, so no plaintext passwords are ever exposed.</p>
+      </div>
+      <br/>
+      <div>
+        <h1 className="title is-5">Log In</h1>
+        <p>Click "Returning User" to log in to an existing account. Enter your credentials and press "Log in".</p>
+        <img src={logIn} alt="Login Form" />
+        <p>Your username and password will be checked against the database.
+          If the credentials match, you will be logged in and brought to the dashboard.
+        </p>
+      </div>
+    </>
+  )
 }
 
 const DashboardHelp = () => {
@@ -207,39 +243,53 @@ const ReviewHelp = () => {
 }
 
 
-const Help: React.FC<Props> = ({setHelpActive, path}) => {
+const Help: React.FC<Props> = ({helpActive, setHelpActive}) => {
   
-  const [activeHelp, setActiveHelp] = useState(path);
+  const location = useLocation();
+  const path = location.pathname;
+
+  const [activeNav, setActiveNav] = useState(path);
 
   return (
-    <div className="modal-card">
-      <header className="modal-card-head">
-        <p className="modal-card-title">Help</p>
-        <button onClick={() => setHelpActive(false)} className="delete" aria-label="close"></button>
-      </header>
-      <section className="modal-card-body" style={{background: "rgb(250, 250, 250)"}}>
-        <div className="tabs">
-          <ul>
-            <li className={activeHelp=="/dashboard" ? "is-active" : ""}><a onClick={() => setActiveHelp("/dashboard")}>Dashboard</a></li>
-            <li className={activeHelp=="/quiz" ? "is-active" : ""}><a onClick={() => setActiveHelp("/quiz")}>Quiz</a></li>
-            <li className={activeHelp=="/result" ? "is-active" : ""}><a onClick={() => setActiveHelp("/result")}>Results</a></li>
-            <li className={activeHelp=="/review" ? "is-active" : ""}><a onClick={() => setActiveHelp("/review")}>Review Old Results</a></li>
-          </ul>
+    <>
+
+      <div className={helpActive ? "modal is-active" : "modal"}>
+        <div onClick={() => setHelpActive(false)} className="modal-background"></div>
+
+        <div className="modal-card">
+          <header className="modal-card-head">
+            <p className="modal-card-title">Help</p>
+            <button onClick={() => setHelpActive(false)} className="delete" aria-label="close"></button>
+          </header>
+          <section className="modal-card-body" style={{background: "rgb(250, 250, 250)"}}>
+            <div className="tabs">
+              <ul>
+              <li className={activeNav=="/" ? "is-active" : ""}><a onClick={() => setActiveNav("/")}>Title</a></li>
+                <li className={activeNav=="/dashboard" ? "is-active" : ""}><a onClick={() => setActiveNav("/dashboard")}>Dashboard</a></li>
+                <li className={activeNav=="/quiz" ? "is-active" : ""}><a onClick={() => setActiveNav("/quiz")}>Quiz</a></li>
+                <li className={activeNav=="/result" ? "is-active" : ""}><a onClick={() => setActiveNav("/result")}>Results</a></li>
+                <li className={activeNav=="/review" ? "is-active" : ""}><a onClick={() => setActiveNav("/review")}>Review Old Results</a></li>
+              </ul>
+            </div>
+            {activeNav=="/" && 
+              <TitleHelp />
+            }
+            {activeNav=="/dashboard" && 
+              <DashboardHelp />
+            }
+            {activeNav=="/quiz" && 
+              <QuizHelp />
+            }
+            {activeNav=="/result" && 
+              <ResultsHelp />
+            }
+            {activeNav=="/review" && 
+              <ReviewHelp />
+            }
+          </section>
         </div>
-        {activeHelp=="/dashboard" && 
-          <DashboardHelp />
-        }
-        {activeHelp=="/quiz" && 
-          <QuizHelp />
-        }
-        {activeHelp=="/result" && 
-          <ResultsHelp />
-        }
-        {activeHelp=="/review" && 
-          <ReviewHelp />
-        }
-      </section>
-    </div>
+      </div>
+    </>
   )
 }
 
