@@ -28,7 +28,7 @@ The project is based off of an `electron-forge` Electron+Webpack+Typescript boil
 Security is obviously a concern, so steps have been taken to harden the program somewhat. All text inputs are restricted to only alphanumeric characters and potentially underscores, dots, and dashes. All passwords are hashed with bcrypt before being sent to the database. Therefore no plaintext passwords are ever stored.
 
 ### Database
-The program uses [MongoDB](https://www.mongodb.com/), which is a NoSQL database. MongoDB was chosen because of the JSON-like format of file storage, which is useful since we are using Javascript.
+The program uses [MongoDB](https://www.mongodb.com/), which is a NoSQL database. MongoDB was chosen because of the JSON-like format of file storage, which is useful since we are using Javascript. In addition, the cloud-based infrastructure provides for easy scalability and reliability. The higher paid data tiers also allow for automatic backups.
 
 ### Generating Reports
 Score reports can be exported in PDF format. Originally a direct print option was considered, but exporting to a PDF provides more flexibility to the user, and they can still print the PDF.
