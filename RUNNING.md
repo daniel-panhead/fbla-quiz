@@ -1,5 +1,6 @@
 # Running the Program
-If you are running the Windows or Linux binaries, first extract the entire folder. Once extraction is complete, navigate to the extracted folder and run "FBLA Quiz.exe" or "FBLA Quiz" for Windows and Linux, respectively. If you are on Mac or want to build from source, refer to [INSTALLING.md](./INSTALING.md).  
+If you are running the Windows or Linux binaries, first extract the entire folder. Once extraction is complete, navigate to the extracted folder and run "FBLA Quiz.exe" or "FBLA Quiz" for Windows and Linux, respectively. If you are running on Windows, you may be presented with a security prompt saying that Windows Smartscreen has blocked the app. This is because the app has not been signed with a digital certificate, and certificates are expensive. Click "More info" and then click "Run Anyway". If you are on Mac or want to build from source, refer to [INSTALLING.md](./INSTALING.md).
+
 Upon loading the program, users are presented with the title page.
 
 ## Title

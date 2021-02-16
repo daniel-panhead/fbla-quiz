@@ -20,13 +20,13 @@ const createWindow = (): void => {
     icon: path.join(__dirname, 'assets/icon.png'),
     webPreferences: {
       enableRemoteModule: true,
-      // devTools: false,
+      devTools: false,
       nodeIntegration: true
     }
   });
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  // mainWindow.removeMenu();
+  mainWindow.removeMenu();
 }
 
 app.on('ready', createWindow);
