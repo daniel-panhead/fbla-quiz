@@ -1,15 +1,15 @@
 # 2020-21 FBLA Coding and Programming Competitive Event
 
 ## Take a quiz on your FBLA knowledge
-The quiz app is built on Node.js, Electron, React, Webpack, and Typescript and uses MongoDB for storage.  
-Refer to [RUNNING.md](./RUNNING.md) for instructions about running the program.
-
-Source files are located in src/.
+The quiz app is built on Node.js, Electron, React, Webpack, and Typescript and uses MongoDB for storage.
 
 FBLA logos are property of FBLA-PBL, used in accordance with https://www.fbla-pbl.org/cmh/logos-images/guidelines/
 
-Electron+Webpack+Typescript boilerplate code provided by `electron-forge`
+Electron+Webpack+Typescript boilerplate code provided by `electron-forge`.
 
+## Download
+To download the program, [navigate to the releases page](https://github.com/daniel-panhead/fbla-quiz/releases) and download the latest version for your respective OS.  
+Refer to [RUNNING.md](./RUNNING.md) for instructions about running the program.
 ## Considerations
 
 ### GUI
