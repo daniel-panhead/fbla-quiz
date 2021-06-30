@@ -85,8 +85,11 @@ typings/
 # Webpack
 .webpack/
 
-# Electron-Forge
+# Electron-Forge build
 out/
 
 # Saved test pdf
 result.pdf
+
+# MongoDB connection string
+uri

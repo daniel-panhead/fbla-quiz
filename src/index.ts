@@ -3,7 +3,8 @@ import {MongoClient} from 'mongodb';
 import path from 'path';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
-const uri = "mongodb+srv://userAdmin:***REMOVED***@cluster0.ojeo0.mongodb.net/<dbname>?retryWrites=true&w=majority";
+// Set the URI to MongoDB connection string
+const uri = "";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 const connection = client.connect();
 

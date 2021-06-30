@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-pattern */
 import React, { FormEvent, useEffect, useState } from 'react';
 import {useHistory} from 'react-router-dom';
 import Nav from './Nav';
